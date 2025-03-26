@@ -43,6 +43,7 @@ body{
     margin:0;
 }
 
+/* das hier bis zeile 76 verursacht probleme*/
 .fade-in {
     opacity: 0;
     animation: fadeIn .5s ease-in-out forwards;

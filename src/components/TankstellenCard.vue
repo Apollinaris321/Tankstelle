@@ -87,12 +87,12 @@ h1{
   padding-bottom: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.3s ease !important;
 }
 
 .card:hover{
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  transform: scale(1.1);
+  transform: scale(1.1) !important;
 }
 
 .map{
