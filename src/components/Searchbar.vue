@@ -50,71 +50,71 @@ onMounted(() => {
 })
 </script>
   
-  <style scoped>
-  .search-container {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
+<style scoped>
+.search-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
   
-  .search-bar {
-    position: relative;
-    width: 0;
-    opacity: 0;
-    height: 40px;
-    background: transparent;
-    border: 2px solid #333;
-    border-radius: 40px;
-    transition: all 0.5s linear;
-    overflow: hidden;
-  }
+.search-bar {
+  position: relative;
+  width: 0;
+  opacity: 0;
+  height: 40px;
+  background: transparent;
+  border: 2px solid #333;
+  border-radius: 40px;
+  transition: all 0.5s linear;
+  overflow: hidden;
+}
   
-  .search-bar.active {
-    opacity: 1;
-    width: 300px;
-  }
+.search-bar.active {
+  opacity: 1;
+  width: 600px;
+}
   
-  .search-bar input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: calc(100% - 40px);
-    height: 100%;
-    padding: 0 15px;
-    border: none;
-    background: transparent;
-    outline: none;
-    font-size: 16px;
-    color: #333;
-  }
+.search-bar input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 40px);
+  height: 100%;
+  padding: 0 15px;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+}
   
-  .search-icon {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
+.search-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
   
-  .search-icon svg {
-    fill: #333;
-    transition: transform 0.3s;
-  }
+.search-icon svg {
+  fill: #333;
+  transition: transform 0.3s;
+}
   
-  .search-bar.active .search-icon svg {
-    transform: scale(1.1);
-  }
+.search-bar.active .search-icon svg {
+  transform: scale(1.1);
+}
   
-  /* Focus styles */
-  .search-bar input:focus {
-    color: #000;
-  }
+/* Focus styles */
+.search-bar input:focus {
+  color: #000;
+}
   
-  .search-bar input:focus + .search-icon svg {
-    fill: #000;
-  }
-  </style>
+.search-bar input:focus + .search-icon svg {
+  fill: #000;
+}
+</style>

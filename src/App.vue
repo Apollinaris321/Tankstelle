@@ -1,8 +1,27 @@
+<template>
+  <div class="main ibm-plex-sans-font">
+
+    <Titlebar></Titlebar>
+    <Searchbar :filter="filter"></Searchbar>
+
+    <Button :onClick="aufsteigend" label="aufsteigend"></Button>
+    <Button :onClick="absteigend" label="absteigend"></Button>
+
+    <TransitionGroup name="fade" tag="div" class="container">
+      <div v-for="(item, index) in filteredData" :key="item.attributes.objectid">
+          <TankstellenCard :x="item.geometry.x" :y="item.geometry.y" :adresse="item.attributes.adresse" :id="item.attributes.objectid"></TankstellenCard>
+      </div>
+    </TransitionGroup>
+  </div>
+</template>
+
+
 <script setup>
 import { ref, onMounted } from "vue";
 import TankstellenCard from "./components/TankstellenCard.vue";
 import Searchbar from "./components/Searchbar.vue";
-
+import Titlebar from "./components/Titlebar.vue";
+import Button from "./components/Button.vue";
 
 const data = ref([]);
 const filteredData = ref([]);
@@ -18,21 +37,18 @@ const fetchData = async () => {
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-
 };
 
 onMounted(() => {
-  console.log("Loading");
   fetchData()
 })
 
 function filter(adress){
-  console.log("filtering by adress: ", adress);
   filteredData.value = data.value.filter(t => t.attributes.adresse.toLowerCase().includes(adress.toLowerCase()))
 }
 
 function aufsteigend(){
-  filteredData.value = [...data.value].sort((a, b) => {
+  filteredData.value = [...filteredData.value].sort((a, b) => {
          return a.attributes.adresse.localeCompare(b.attributes.adresse); 
        });
 }
@@ -44,22 +60,11 @@ function absteigend(){
 
 </script>
 
-<template>
-  <div class="main">
-    <h2>Tankstellen Köln</h2>
-    <Searchbar :filter="filter"></Searchbar>
-    <button @click="aufsteigend">aufsteigend</button>
-    <button @click="absteigend">absteigend</button>
 
-    <div class="container">
-      <div v-for="(item, index) in filteredData" :key="index">
-          <TankstellenCard :x="item.geometry.x" :y="item.geometry.y" :adresse="item.attributes.adresse" :id="item.attributes.objectid"></TankstellenCard>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
+
+
 main, body, html{
   margin: 0;
   padding: 0;
@@ -82,11 +87,24 @@ h2{
   align-items: center;
   gap: 10px;
 }
-.container{
+
+.container {
   background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+
+  gap: 10px;
+  width: 100%;
+  max-width: 800px;
+  justify-items: center;
 }
+
+@media (max-width: 1000px) {
+  .container {
+    grid-template-columns: 1fr; 
+  }
+}
+
+
 </style>
