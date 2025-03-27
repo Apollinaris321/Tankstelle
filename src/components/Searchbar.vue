@@ -10,7 +10,7 @@
           v-model="searchQuery"
           type="text"
           @input="handleSearchChange"
-          placeholder="Search..."
+          placeholder="Suche..."
         />
         <div class="search-icon" @click="search">
           <svg viewBox="0 0 24 24" width="20" height="20">
@@ -18,11 +18,15 @@
           </svg>
         </div>
       </div>
+      <div class="gaspump">
+        <Gaspump></Gaspump>
+      </div>
     </div>
   </template>
   
 <script setup>
 import { ref, onMounted, defineProps } from 'vue'
+import Gaspump from './Gaspump.vue'
 
 const props = defineProps(['filter'])
 
@@ -35,12 +39,7 @@ const focusSearch = () => {
 }
 
 function handleSearchChange(){
-    console.log("changing: ", searchQuery.value)
     props.filter(searchQuery.value)
-}
-    
-function search(){
-    console.log("searching for: ", searchQuery.value)
 }
   
 onMounted(() => {
@@ -59,14 +58,15 @@ onMounted(() => {
   
 .search-bar {
   position: relative;
+  z-index: 10;
   width: 0;
   opacity: 0;
   height: 40px;
   background: transparent;
-  border: 2px solid #333;
   border-radius: 40px;
   transition: all 0.5s linear;
-  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  background-color: white;
 }
   
 .search-bar.active {
@@ -109,7 +109,6 @@ onMounted(() => {
   transform: scale(1.1);
 }
   
-/* Focus styles */
 .search-bar input:focus {
   color: #000;
 }
@@ -117,4 +116,26 @@ onMounted(() => {
 .search-bar input:focus + .search-icon svg {
   fill: #000;
 }
+
+.search-bar:hover{
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.search-bar:hover ~ .gaspump {
+  opacity: 1;
+  transform: translateY(-100%) translateX(650%);
+  transition: transform .5s ease ;
+}
+
+.gaspump {
+  opacity: 0;
+  position: absolute;
+  transform: translateY(0) translateX(650%);
+  transition: transform .5s ease ;
+  height: 40px;
+  width: 40px;
+  z-index: 0;
+}
+
+
 </style>

@@ -1,20 +1,26 @@
 <template>
-    <button @click="handleClick" class="styled-button">
-        {{ label }}
-    </button>
+  <button 
+    @click="handleClick" 
+    :class="{ active: isActive }"
+    class="styled-button"
+  >
+    {{ label }}
+  </button>
 </template>
-
+  
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, defineEmits } from 'vue';
 
-const props = defineProps(['onClick', 'label'])
+const props = defineProps(['onClick', 'label', 'isActive'])
+const emit = defineEmits(['toggle'])
 
 function handleClick(event){
     props.onClick(event)
+    emit('toggle')
 }
 
 </script>
-
+  
 <style scoped>
 
 button{
@@ -46,5 +52,10 @@ button{
 .styled-button:focus {
   outline-offset: 4px;
 }
-
+  
+.styled-button.active {
+  background-color: black;
+  color: white;
+}
 </style>
+  

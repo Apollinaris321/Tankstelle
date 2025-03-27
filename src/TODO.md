@@ -4,8 +4,10 @@
 x choose font
 x make reusable cards
 x make button reusable component
-- style cards
-- style buttons
+x style cards
+x style buttons
+- add padding to card bottom
+- sortieren buttons fix
 - host
 - nginx
 - erläuterung der doku

@@ -5,7 +5,6 @@
   <script setup>
   import { ref, onMounted, onUnmounted, watch } from "vue";
   import L from "leaflet";
-  import "leaflet/dist/leaflet.css";
   
   const props = defineProps({
     x: Number,
@@ -41,12 +40,14 @@
   });
   </script>
   
-  <style scoped>
-  .map-container {
-    border-radius: 5px;
-    overflow: hidden;
-    width: 70%;
-    height: 70%;
-  }
-  </style>
+<style scoped>
+.map-container {
+  border-radius: 5px;
+  overflow: hidden;
+  width: 70%;
+  height: 70%;
+  z-index: 1;
+  position: relative;
+}
+</style>
   

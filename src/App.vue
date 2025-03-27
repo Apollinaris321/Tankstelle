@@ -4,14 +4,39 @@
     <Titlebar></Titlebar>
     <Searchbar :filter="filter"></Searchbar>
 
-    <Button :onClick="aufsteigend" label="aufsteigend"></Button>
-    <Button :onClick="absteigend" label="absteigend"></Button>
+    <div class="sortcontainer">
+      <div>Alphabetisch Sortieren: </div>
+      <Button2 
+      :isActive="activeButton === 'aufsteigend'" 
+      @toggle="setActive('aufsteigend')" 
+      :onClick="aufsteigend"
+      label="aufsteigend"
+    />
+    <Button2 
+      :isActive="activeButton === 'absteigend'" 
+      @toggle="setActive('absteigend')" 
+      :onClick="absteigend"
+      label="absteigend"
+    />
+    </div>
+    <button @click="isModalOpen = true">Open Modal</button>
 
     <TransitionGroup name="fade" tag="div" class="container">
       <div v-for="(item, index) in filteredData" :key="item.attributes.objectid">
-          <TankstellenCard :x="item.geometry.x" :y="item.geometry.y" :adresse="item.attributes.adresse" :id="item.attributes.objectid"></TankstellenCard>
+          <TankstellenCard @click="openModal(item)" :x="item.geometry.x" :y="item.geometry.y" :adresse="item.attributes.adresse" :id="item.attributes.objectid"></TankstellenCard>
       </div>
     </TransitionGroup>
+
+    <Teleport to="#modal">
+      <Transition name="modal">
+        <div class="modal-bg" v-if="isModalOpen">
+          <div class="modal" ref="modal">
+            <button @click="isModalOpen=false">x</button>
+            Click outside this modal to close it
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
@@ -21,10 +46,22 @@ import { ref, onMounted } from "vue";
 import TankstellenCard from "./components/TankstellenCard.vue";
 import Searchbar from "./components/Searchbar.vue";
 import Titlebar from "./components/Titlebar.vue";
-import Button from "./components/Button.vue";
+import Button2 from "./components/ToggleButton.vue";
+import { onClickOutside } from "@vueuse/core";
 
 const data = ref([]);
 const filteredData = ref([]);
+const activeButton = ref('aufsteigend');
+const isModalOpen = ref(false)
+const modal = ref(null)
+
+onClickOutside(modal, () => (isModalOpen.value = false))
+
+const setActive = (button) => {
+  console.log("toggling...");
+  
+  activeButton.value = button;
+};
 
 const fetchData = async () => {
   try {
@@ -58,6 +95,22 @@ function absteigend(){
   filteredData.value.reverse()
 }
 
+
+//modal
+const selectedItem = ref(null);
+
+// Open modal
+function openModal(item) {
+  selectedItem.value = item;
+  isModalOpen.value = true;
+}
+
+// Close modal
+function closeModal() {
+  isModalOpen.value = false;
+  selectedItem.value = null;
+}
+
 </script>
 
 
@@ -70,6 +123,7 @@ main, body, html{
   padding: 0;
   height: 100vh;
   width: 100vw;
+  background-color: rgb(250, 250, 250);
 }
 
 h2{
@@ -79,7 +133,6 @@ h2{
 }
 
 .main{
-  background-color: white;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -89,12 +142,11 @@ h2{
 }
 
 .container {
+  padding-top: 30px;
   background-color: white;
   display: grid;
-
   grid-template-columns: repeat(2, minmax(200px, 1fr));
-
-  gap: 10px;
+  gap: 50px;
   width: 100%;
   max-width: 800px;
   justify-items: center;
@@ -106,5 +158,48 @@ h2{
   }
 }
 
+.sortcontainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+
+/* Modal Overlay */
+.modal-bg{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 30;
+
+  background-color: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  position: relative;
+
+  background: white;
+  padding: 50px 100px;
+  border-radius: 5px;
+  box-shadow: 0px 10px 5px 2px rgba(0, 0, 0, 0.1);
+}
+
+.modal-enter-active,
+.modal-leave-active{
+  transition: all 0.25s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to{
+  opacity: 0;
+  transform: scale(1.1);
+}
 
 </style>

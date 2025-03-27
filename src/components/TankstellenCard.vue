@@ -11,7 +11,7 @@
     </div>
 
     <div class="map flexcont">
-      <MapComponent :x="x" :y="y"></MapComponent>
+      <MapComponent :x="x" :y="y" ></MapComponent>
     </div>
     <div class="buttonGroup flexcont">
       <Button :onClick="copyToClipboard" label="Zwischenablage kopieren"></Button>
@@ -22,7 +22,6 @@
   
 <script setup>
 import { defineProps } from "vue";
-import "leaflet/dist/leaflet.css";
 import Button from "./Button.vue";
 import MapComponent from "./MapComponent.vue";
 

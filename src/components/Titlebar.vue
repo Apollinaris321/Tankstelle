@@ -1,20 +1,24 @@
 <template>
     <div class="title">
-        <div class="ssg dom fade-in">
-          <DomSVG></DomSVG>
-        </div>
         <div class="titlesplit">
-            <div class="hide">
-                <h1 class="shadow-text risetext">Tankstellen</h1>
+            <div class="ssg dom dom1 fade-in">
+              <DomSVG></DomSVG>
             </div>
             <div class="row">
-                <h1 class="cologne shadow-text droptext ">Köln</h1>
-                <div class="ssg gas fade-in">
-                  <GasStationSVG />
+                <h1 class="shadow-text droptext cologne ">
+                    Kölner
+                </h1>
+                <div class="ssg dom dom2 fade-in">
+                  <DomSVG></DomSVG>
                 </div>
             </div>
+            <div class="hide">
+                <h1 class="shadow-text risetext tankstellen">Tankstellen</h1>
+            </div>
         </div>
-
+        <div class="subtitlecont">
+            <div class="subtitle">Finden Sie eine passende Tankstelle in Ihrer nähe!</div>
+        </div>
     </div>
 </template>
 
@@ -26,33 +30,43 @@ import DomSVG from "./DomSVG.vue";
 
 <style scoped>
 
+.subtitle{
+    text-align: end;
+    font-size: 0.4em;
+    padding-right: 90px;
+}
+
 .row{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: end;
     gap: 20px;
-  overflow: hidden;
+    overflow: hidden;
 }
+
 .title{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
     font-size: 3em;
+    gap: 50px;
 }
 
 .titlesplit{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: 100%;
     padding: 0;
     margin: 0;
 }
 
-.cologne{
-    padding-left: 50px;
+@media screen and (max-width: 1000px){
+    .titlesplit{
+        flex-direction: column;
+    }
 }
 
 h1{
@@ -64,11 +78,8 @@ h1{
 }
 
 .dom{
-    height: 300px;
+    height: 200px;
     width: 200px;
-    position: relative;
-    left: 100px; 
-    top: -20px;
 }
 
 .gas{
@@ -86,13 +97,15 @@ h1{
 
 .hide{
     overflow: hidden;
-
+    position: relative;
+    display: flex;
+    align-items: end;
 }
 
 .risetext{
     display: inline-block;
     position: relative;
-    animation: slide-in-up .5s ease-out forwards, shift-shadow .5s ease-in-out .5s forwards;
+    animation: slide-in-up .5s cubic-bezier(0.55, 0, 0.1, 1) forwards, shift-shadow .5s ease-in-out .5s forwards;
 }
 
 @keyframes slide-in-up {
@@ -107,7 +120,7 @@ h1{
 .droptext{
     display: inline-block;
     position: relative;
-    animation: slide-in-down .5s ease-out forwards, shift-shadow .5s ease-in-out .5s forwards;
+    animation: slide-in-down .5s cubic-bezier(0.55, 0, 0.1, 1) forwards, shift-shadow .5s ease-in-out .5s forwards;
 }
 
 @keyframes slide-in-down {
@@ -119,5 +132,20 @@ h1{
     }
 }
 
+@media (min-width: 1000px) {
+  .dom2 {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .dom1 {
+    display: none;
+  }
+}
+
+.tankstellen{
+    padding-left: 30px;
+}
 
 </style>
