@@ -4,6 +4,11 @@
     <Titlebar></Titlebar>
     <Searchbar :filter="filter"></Searchbar>
 
+
+    <div class="gascontainer">
+      <GasStation></GasStation>
+    </div>
+
     <div class="sortcontainer">
       <div>Alphabetisch Sortieren: </div>
       <Button2 
@@ -48,6 +53,8 @@ import Searchbar from "./components/Searchbar.vue";
 import Titlebar from "./components/Titlebar.vue";
 import Button2 from "./components/ToggleButton.vue";
 import { onClickOutside } from "@vueuse/core";
+import GasBlender from "./GasBlender.vue";
+import GasStation from "./GasStation.vue";
 
 const data = ref([]);
 const filteredData = ref([]);
@@ -200,6 +207,11 @@ h2{
 .modal-leave-to{
   opacity: 0;
   transform: scale(1.1);
+}
+
+.gascontainer{
+  width: 100px;
+  height: 100px;
 }
 
 </style>
