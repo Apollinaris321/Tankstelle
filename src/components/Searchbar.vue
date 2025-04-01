@@ -2,7 +2,6 @@
     <div class="search-container">
       <div 
         class="search-bar"
-        :class="{ 'active': isActive }"
         @click="focusSearch"
       >
         <input
@@ -10,7 +9,7 @@
           v-model="searchQuery"
           type="text"
           @input="handleSearchChange"
-          placeholder="Suche..."
+          placeholder="Straßennamen suchen..."
         />
         <div class="search-icon" @click="search">
           <svg viewBox="0 0 24 24" width="20" height="20">
@@ -25,37 +24,31 @@
   </template>
   
 <script setup>
-import { ref, onMounted, defineProps } from 'vue'
-import Gaspump from './Gaspump.vue'
+import { ref, defineProps } from 'vue'
+import Gaspump from '../svg/Gaspump.vue'
 
 const props = defineProps(['filter'])
 
 const searchQuery = ref('')
-const isActive = ref(false)
 const searchInput = ref(null)
 
-const focusSearch = () => {
+function focusSearch(){
   searchInput.value.focus()
 }
 
 function handleSearchChange(){
     props.filter(searchQuery.value)
 }
-  
-onMounted(() => {
-  setTimeout(() => {
-    isActive.value = true
-  }, 300)
-})
 </script>
   
 <style scoped>
+
 .search-container {
   display: flex;
   justify-content: center;
   padding: 20px;
 }
-  
+
 .search-bar {
   position: relative;
   z-index: 10;
@@ -64,14 +57,20 @@ onMounted(() => {
   height: 40px;
   background: transparent;
   border-radius: 40px;
-  transition: all 0.5s linear;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
   background-color: white;
+  animation: expandSearch 0.8s ease-in forwards;
 }
-  
-.search-bar.active {
-  opacity: 1;
-  width: 600px;
+
+@keyframes expandSearch {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 600px;
+    opacity: 1;
+  }
 }
   
 .search-bar input {
@@ -104,18 +103,6 @@ onMounted(() => {
   fill: #333;
   transition: transform 0.3s;
 }
-  
-.search-bar.active .search-icon svg {
-  transform: scale(1.1);
-}
-  
-.search-bar input:focus {
-  color: #000;
-}
-  
-.search-bar input:focus + .search-icon svg {
-  fill: #000;
-}
 
 .search-bar:hover{
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -138,4 +125,16 @@ onMounted(() => {
 }
 
 
+@media only screen and (max-width: 600px){
+  .search-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  width: 300px;
+  }
+
+  .gaspump {
+    display: none;
+  }
+}
 </style>

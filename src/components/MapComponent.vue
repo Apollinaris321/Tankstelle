@@ -1,51 +1,51 @@
 <template>
-    <div class="map-container" ref="mapContainer"></div>
-  </template>
+  <div class="map-container" ref="mapContainer"></div>
+</template>
   
-  <script setup>
-  import { ref, onMounted, onUnmounted, watch } from "vue";
-  import L from "leaflet";
+<script setup>
+import { ref, onMounted, onUnmounted, watch } from "vue";
+import L from "leaflet";
   
-  const props = defineProps({
-    x: Number,
-    y: Number,
-  });
+const props = defineProps({
+  x: Number,
+  y: Number,
+});
   
-  const mapContainer = ref(null);
-  let map = null;
-  let marker = null;
+const mapContainer = ref(null);
+let map = null;
+let marker = null;
   
-  watch([() => props.x, () => props.y], ([newX, newY], [oldX, oldY]) => {
-    if (map && marker) {
-      map.setView([newY, newX], map.getZoom());
-      marker.setLatLng([newY, newX]);
-    }
-  });
+watch([() => props.x, () => props.y], ([newX, newY], [oldX, oldY]) => {
+  if (map && marker) {
+    map.setView([newY, newX], map.getZoom());
+    marker.setLatLng([newY, newX]);
+  }
+});
   
-  onMounted(() => {
-    if (mapContainer.value) {
-      map = L.map(mapContainer.value).setView([props.y, props.x], 15);
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>',
-      }).addTo(map);
+onMounted(() => {
+  if (mapContainer.value) {
+    map = L.map(mapContainer.value).setView([props.y, props.x], 15);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>',
+    }).addTo(map);
   
-      marker = L.marker([props.y, props.x]).addTo(map);
-    }
-  });
+    marker = L.marker([props.y, props.x]).addTo(map);
+  }
+});
   
-  onUnmounted(() => {
-    if (map) {
-      map.remove();
-    }
-  });
-  </script>
+onUnmounted(() => {
+  if (map) {
+    map.remove();
+  }
+});
+</script>
   
 <style scoped>
 .map-container {
   border-radius: 5px;
   overflow: hidden;
-  width: 70%;
-  height: 70%;
+  width: 100%; 
+  height: 100%;
   z-index: 1;
   position: relative;
 }

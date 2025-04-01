@@ -1,33 +1,23 @@
 <template>
-  <div class="card flexcont fade-in-scale">
-    <h1>Tankstelle</h1>
-    <div class="flexcont">
-      <div>
-        Adresse:
-      </div>
-      <div>
-        {{ adresse }}
-      </div>
-    </div>
-
+  <div class="card flexcont fade-in-scale" @click="openModal" >
+    <TitleCard :adresse="adresse"></TitleCard>
     <div class="map flexcont">
-      <MapComponent :x="x" :y="y" ></MapComponent>
+      <MapComponent :x="x" :y="y" @click.stop></MapComponent>
     </div>
     <div class="buttonGroup flexcont">
-      <Button :onClick="copyToClipboard" label="Zwischenablage kopieren"></Button>
+      <Button :onClick="copyToClipboard" label="Link kopieren"></Button>
       <Button :onClick="openGoogleMaps" label="Öffnen in Google Maps"></Button>
     </div>
   </div>
 </template>
   
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, defineEmits, ref } from "vue";
 import Button from "./Button.vue";
 import MapComponent from "./MapComponent.vue";
-
-
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+import TitleCard from "./TitleCard.vue";
 
 function opentoast(msg){
   toast(msg, {
@@ -49,17 +39,26 @@ const props = defineProps({
   id: Number
 });
 
- 
+const emit = defineEmits(["open"]);
+
+function openModal(event){
+  const clickedElement = event.target;
+
+  if (clickedElement.closest("button")) {
+    return;
+  }
+  emit("open", props.id)
+}
 const openGoogleMaps = (event) => {
   const googleMapsUrl = `https://www.google.com/maps?q=${props.y},${props.x}`;
   window.open(googleMapsUrl, "_blank"); // Opens Google Maps in a new tab
 };
 
-const copyToClipboard = async () => {
+async function copyToClipboard(){
   try {
-    let mapsUrl = `https://www.google.com/maps?q=${props.y},${props.x}`
-    await navigator.clipboard.writeText(mapsUrl);
-    opentoast("Copied to Clipboard!")
+    let currentUrl = window.location.href;
+    await navigator.clipboard.writeText(currentUrl + "/?id=" + props.id);
+    opentoast("In die Zwischenablage kopiert!")
 
   } catch (err) {
     console.error("Failed to copy: ", err);
@@ -76,7 +75,7 @@ h1{
 }
 
 .card {
-  border: 1px solid #ccc;
+  background-color: white;
   border-radius: 10px;
   width: 350px;
   height: 450px;
@@ -85,6 +84,7 @@ h1{
   padding: 10px;
   padding-bottom: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
 
   transition: box-shadow 0.3s ease, transform 0.3s ease !important;
 }
@@ -94,17 +94,17 @@ h1{
   transform: scale(1.1) !important;
 }
 
-.map{
-  width: 100%;
-  height: 100%;
-}
-
 .flexcont{
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 10px;
+}
+
+.map{
+  width: 250px;
+  height: 250px;
 }
 
 </style>

@@ -20,6 +20,7 @@ function handleClick(event){
 button{
   border: none;
 }
+
 .styled-button {
   background-color: white;
   color: black;

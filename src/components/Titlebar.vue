@@ -17,33 +17,18 @@
             </div>
         </div>
         <div class="subtitlecont">
-            <div class="subtitle">Finden Sie eine passende Tankstelle in Ihrer nähe!</div>
+            <div class="subtitle fade-in">Finden Sie eine passende Tankstelle in Ihrer nähe!</div>
         </div>
     </div>
 </template>
 
 <script setup>
-import GasStationSVG from "./GasStationSVG.vue";
-import DomSVG from "./DomSVG.vue";
+import DomSVG from "../svg/DomSVG.vue";
 
 </script>
 
 <style scoped>
 
-.subtitle{
-    text-align: end;
-    font-size: 0.4em;
-    padding-right: 90px;
-}
-
-.row{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: end;
-    gap: 20px;
-    overflow: hidden;
-}
 
 .title{
     display: flex;
@@ -148,4 +133,18 @@ h1{
     padding-left: 30px;
 }
 
+.subtitle{
+    text-align: end;
+    font-size: 0.4em;
+    padding-right: 90px;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: end;
+    gap: 20px;
+    overflow: hidden;
+}
 </style>
