@@ -82,6 +82,7 @@ async function fetchData(){
     const json = await response.json();
     data.value = json.features || [];
     filteredData.value = json.features || []
+    console.log(data.value);
   } catch (error) {
     console.error("Error fetching data:", error);
   }

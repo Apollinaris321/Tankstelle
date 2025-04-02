@@ -1,4 +1,0 @@
-- ADD TESTS
-- host
-- nginx
-- erläuterung der doku

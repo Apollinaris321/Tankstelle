@@ -1,12 +1,12 @@
 <template>
-  <div class="card flexcont fade-in-scale" @click="openModal" >
+  <div class="card flexcont fade-in-scale" @click="openModal" data-testid="card-container">
     <TitleCard :adresse="adresse"></TitleCard>
     <div class="map flexcont">
       <MapComponent :x="x" :y="y" @click.stop></MapComponent>
     </div>
     <div class="buttonGroup flexcont">
-      <Button :onClick="copyToClipboard" label="Link kopieren"></Button>
-      <Button :onClick="openGoogleMaps" label="Öffnen in Google Maps"></Button>
+      <Button data-testid="copy-button" :onClick="copyToClipboard" label="Link kopieren"></Button>
+      <Button data-testid="maps-button" :onClick="openGoogleMaps" label="Öffnen in Google Maps"></Button>
     </div>
   </div>
 </template>
@@ -57,7 +57,7 @@ const openGoogleMaps = (event) => {
 async function copyToClipboard(){
   try {
     let currentUrl = window.location.href;
-    await navigator.clipboard.writeText(currentUrl + "/?id=" + props.id);
+    await navigator.clipboard.writeText(currentUrl + "?id=" + props.id);
     opentoast("In die Zwischenablage kopiert!")
 
   } catch (err) {
