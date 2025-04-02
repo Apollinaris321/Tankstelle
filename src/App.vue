@@ -54,6 +54,7 @@ const modal = ref(null)
 const selectedItem = ref(null);
 
 onMounted(async() => {
+  // checken ob schon eine Card gesetzt wurde
   const urlParams = new URLSearchParams(window.location.search); 
   const id = urlParams.get("id"); 
   await fetchData()
@@ -72,6 +73,7 @@ function setActive(button){
   activeButton.value = button;
 };
 
+// updated die router url wenn eine Card geöffnet wurde
 function updatePos(item){
   router.push({ query: { id: item.attributes.objectid } }); 
 };
@@ -82,22 +84,24 @@ async function fetchData(){
     const json = await response.json();
     data.value = json.features || [];
     filteredData.value = json.features || []
-    console.log(data.value);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 };
 
+// Cards filtern
 function filter(adress){
   filteredData.value = data.value.filter(t => t.attributes.adresse.toLowerCase().includes(adress.toLowerCase()))
 }
 
+// sortiert die Cards aufsteigend nach dem Adressnamen
 function aufsteigend(){
   filteredData.value = [...filteredData.value].sort((a, b) => {
          return a.attributes.adresse.localeCompare(b.attributes.adresse); 
        });
 }
 
+// sortiert erst aufsteigend dann Liste umkehren
 function absteigend(){
   aufsteigend()
   filteredData.value.reverse()

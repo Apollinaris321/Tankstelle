@@ -59,11 +59,13 @@ onClickOutside(modal, () => {
   emits('close', false)
 })
 
+// google url aufrufen mit den Koordinaten der Tankstelle
 function openGoogleMaps(event){
   const googleMapsUrl = `https://www.google.com/maps?q=${props.y},${props.x}`;
   window.open(googleMapsUrl, "_blank"); // Opens Google Maps in a new tab
 };
 
+// url der Card kopieren
 async function copyToClipboard(){
   try {
     let currentUrl = window.location.href;
